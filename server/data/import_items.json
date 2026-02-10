@@ -1,0 +1,24 @@
+[
+  {
+    "id": "6eb68971-16e5-42a3-b0c7-4d6b296dd51e",
+    "importId": "81d12a00-97ba-468a-bd67-38b6fdb2cd30",
+    "productId": "6a412bba-11b8-4fd9-8d8d-67975f20cd7f",
+    "quantity": 10,
+    "unitPrice": 25000000,
+    "discount": 0,
+    "total": 250000000,
+    "createdAt": "2026-01-22T10:34:43.398Z",
+    "updatedAt": "2026-01-22T10:34:43.398Z"
+  },
+  {
+    "id": "41770ad1-7117-48e4-98f6-7e32baad58f8",
+    "importId": "81d12a00-97ba-468a-bd67-38b6fdb2cd30",
+    "productId": "50770baf-5ad9-4b4e-b45e-63ee990fb78e",
+    "quantity": 5,
+    "unitPrice": 45000000,
+    "discount": 0,
+    "total": 225000000,
+    "createdAt": "2026-01-22T10:34:43.403Z",
+    "updatedAt": "2026-01-22T10:34:43.403Z"
+  }
+]

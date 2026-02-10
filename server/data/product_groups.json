@@ -1,0 +1,18 @@
+[
+  {
+    "id": "522b27eb-9e1c-4bf7-9d4f-1eeb341a6a5b",
+    "name": "Điện thoại",
+    "description": "Điện thoại di động các loại",
+    "status": "active",
+    "createdAt": "2026-01-22T10:32:33.819Z",
+    "updatedAt": "2026-01-22T10:32:33.820Z"
+  },
+  {
+    "id": "2ae14151-70a8-4eed-bb1e-d07f58a3695a",
+    "name": "Laptop",
+    "description": "Máy tính xách tay",
+    "status": "active",
+    "createdAt": "2026-01-22T10:32:33.822Z",
+    "updatedAt": "2026-01-22T10:32:33.822Z"
+  }
+]

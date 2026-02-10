@@ -1,0 +1,12 @@
+[
+    {
+        "id": "admin-001",
+        "username": "admin",
+        "email": "admin@quanlybanhang.com",
+        "password": "$2a$10$VQ3zZ8Z.3Z8Z3Z8Z3Z8Z3.rU8vZ3Z8Z3Z8Z3Z8Z3Z8Z3Z8Z3Z8Z3e",
+        "role": "admin",
+        "isActive": true,
+        "createdAt": "2026-01-22T00:00:00.000Z",
+        "updatedAt": "2026-01-22T00:00:00.000Z"
+    }
+]

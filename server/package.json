@@ -1,0 +1,36 @@
+{
+  "name": "quanlybanhang-server",
+  "version": "1.0.0",
+  "description": "Backend server for Sales Management System",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js",
+    "setup-db": "node scripts/setupDatabase.js",
+    "seed": "node scripts/seedData.js"
+  },
+  "keywords": [
+    "sales",
+    "inventory",
+    "management"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "compression": "^1.8.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.6.1",
+    "express": "^4.18.2",
+    "express-rate-limit": "^8.2.1",
+    "joi": "^18.0.2",
+    "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.16.2",
+    "uuid": "^13.0.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.10.6"
+  }
+}

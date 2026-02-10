@@ -1,0 +1,24 @@
+[
+  {
+    "id": "f9a02cf7-ed31-4570-bcab-2877b63e3734",
+    "code": "NCC000001",
+    "name": "Công ty TNHH Apple Việt Nam",
+    "phone": "0900000001",
+    "email": "apple@example.com",
+    "address": "Quận 1, TP.HCM",
+    "notes": "Nhà phân phối chính hãng Apple",
+    "createdAt": "2026-01-22T10:32:33.841Z",
+    "updatedAt": "2026-01-22T10:32:33.841Z"
+  },
+  {
+    "id": "f7c38135-1395-479b-9a19-99ec6ecf025f",
+    "code": "NCC000002",
+    "name": "Công ty Samsung Electronics",
+    "phone": "0900000002",
+    "email": "samsung@example.com",
+    "address": "Quận 3, TP.HCM",
+    "notes": "Nhà phân phối chính hãng Samsung",
+    "createdAt": "2026-01-22T10:32:33.843Z",
+    "updatedAt": "2026-01-22T10:32:33.843Z"
+  }
+]

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clear Cache & Reload - Quản lý bán hàng</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        .status {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .status-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+        .status-item:last-child {
+            margin-bottom: 0;
+        }
+        .status-label {
+            color: #666;
+        }
+        .status-value {
+            font-weight: 600;
+            color: #333;
+        }
+        .status-value.success {
+            color: #28a745;
+        }
+        .status-value.warning {
+            color: #ffc107;
+        }
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        .btn:active {
+            transform: translateY(0);
+        }
+        .btn-secondary {
+            background: #6c757d;
+        }
+        .success-message {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            padding: 16px;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: none;
+        }
+        .success-message.show {
+            display: block;
+        }
+        .info-box {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 16px;
+            margin-top: 20px;
+            border-radius: 4px;
+        }
+        .info-box h3 {
+            color: #1976D2;
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+        .info-box ul {
+            margin-left: 20px;
+            color: #555;
+            font-size: 14px;
+        }
+        .info-box li {
+            margin-bottom: 6px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔄 Reset Cache & Reload</h1>
+        <p class="subtitle">Xóa localStorage và React Query cache để fetch dữ liệu mới từ backend</p>
+
+        <div class="status">
+            <div class="status-item">
+                <span class="status-label">localStorage Products:</span>
+                <span class="status-value" id="localStorageCount">-</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">Backend Products:</span>
+                <span class="status-value success" id="backendCount">3</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">Backend Status:</span>
+                <span class="status-value success" id="backendStatus">✅ Running</span>
+            </div>
+        </div>
+
+        <button class="btn" onclick="clearAllCache()">
+            🗑️ Xóa tất cả Cache & Reload
+        </button>
+
+        <button class="btn btn-secondary" onclick="checkBackend()">
+            🔍 Kiểm tra Backend API
+        </button>
+
+        <div class="success-message" id="successMessage">
+            ✅ Đã xóa cache thành công! Đang reload trang...
+        </div>
+
+        <div class="info-box">
+            <h3>📋 Sau khi reset:</h3>
+            <ul>
+                <li>Frontend sẽ fetch dữ liệu từ backend</li>
+                <li>iPhone 15 Pro Max: Tồn kho = <strong>10</strong></li>
+                <li>MacBook Pro 14": Tồn kho = <strong>5</strong></li>
+                <li>Samsung Galaxy: Tồn kho = <strong>0</strong> (HẾT HÀNG)</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Check localStorage on load
+        window.addEventListener('load', () => {
+            updateLocalStorageCount();
+        });
+
+        function updateLocalStorageCount() {
+            try {
+                const products = localStorage.getItem('sim_products');
+                if (products) {
+                    const count = JSON.parse(products).length;
+                    document.getElementById('localStorageCount').textContent = `${count} sản phẩm (CŨ)`;
+                    document.getElementById('localStorageCount').classList.add('warning');
+                } else {
+                    document.getElementById('localStorageCount').textContent = 'Trống ✅';
+                    document.getElementById('localStorageCount').classList.add('success');
+                }
+            } catch (e) {
+                document.getElementById('localStorageCount').textContent = 'Lỗi';
+            }
+        }
+
+        async function checkBackend() {
+            try {
+                document.getElementById('backendStatus').textContent = '⏳ Đang kiểm tra...';
+                
+                const response = await fetch('http://localhost:3001/api/products');
+                const result = await response.json();
+                
+                if (result.success && result.data) {
+                    const count = result.data.length;
+                    const withStock = result.data.filter(p => (p.stockQty || 0) > 0).length;
+                    
+                    document.getElementById('backendCount').textContent = 
+                        `${count} sản phẩm (${withStock} có tồn)`;
+                    document.getElementById('backendStatus').textContent = '✅ OK';
+                    document.getElementById('backendStatus').classList.add('success');
+                    
+                    // Show products
+                    console.log('Backend Products:', result.data.map(p => ({
+                        name: p.name,
+                        sku: p.sku,
+                        stockQty: p.stockQty
+                    })));
+                } else {
+                    document.getElementById('backendStatus').textContent = '❌ Error';
+                }
+            } catch (error) {
+                document.getElementById('backendStatus').textContent = '❌ Cannot connect';
+                console.error(error);
+            }
+        }
+
+        function clearAllCache() {
+            // Clear localStorage
+            const keysToRemove = [
+                'sim_products',
+                'sim_suppliers',
+                'sim_customers',
+                'sim_categories',
+                'sim_product_groups',
+                'sim_purchase_receipts',
+                'sim_sales_invoices'
+            ];
+
+            keysToRemove.forEach(key => {
+                localStorage.removeItem(key);
+                console.log(`Removed: ${key}`);
+            });
+
+            // Show success message
+            document.getElementById('successMessage').classList.add('show');
+
+            // Reload after 1.5s
+            setTimeout(() => {
+                window.location.href = 'http://localhost:8080/products';
+            }, 1500);
+        }
+
+        // Auto-check backend on load
+        checkBackend();
+    </script>
+</body>
+</html>

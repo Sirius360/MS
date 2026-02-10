@@ -1,0 +1,158 @@
+<!doctype html>
+<html>
+  <head>
+    <title>API Test</title>
+    <style>
+      body {
+        font-family: Arial;
+        padding: 20px;
+      }
+      .success {
+        color: green;
+      }
+      .error {
+        color: red;
+      }
+      pre {
+        background: #f4f4f4;
+        padding: 10px;
+        border-radius: 5px;
+        overflow-x: auto;
+      }
+      button {
+        padding: 10px 20px;
+        margin: 5px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>🧪 MySQL API Test Page</h1>
+
+    <div>
+      <h2>Configuration</h2>
+      <p><strong>API URL:</strong> <span id="apiUrl">http://localhost:3002</span></p>
+    </div>
+
+    <div>
+      <h2>Tests</h2>
+      <button onclick="testProducts()">Test GET /api/products</button>
+      <button onclick="testCategories()">Test GET /api/categories</button>
+      <button onclick="testCustomers()">Test GET /api/customers</button>
+      <button onclick="testSuppliers()">Test GET /api/suppliers</button>
+      <button onclick="testCreate()">Test CREATE Product</button>
+    </div>
+
+    <div id="result"></div>
+
+    <script>
+      const API_URL = 'http://localhost:3002';
+
+      function showResult(title, data, isError = false) {
+        const resultDiv = document.getElementById('result');
+        resultDiv.innerHTML = `
+                <h3 class="${isError ? 'error' : 'success'}">${title}</h3>
+                <pre>${JSON.stringify(data, null, 2)}</pre>
+            `;
+      }
+
+      async function testProducts() {
+        try {
+          console.log('Testing /api/products...');
+          const response = await fetch(`${API_URL}/api/products`);
+          const data = await response.json();
+          console.log('Products response:', data);
+          showResult(
+            `✅ GET /api/products - Found ${data.pagination?.total || data.length} products`,
+            data
+          );
+        } catch (error) {
+          console.error('Products error:', error);
+          showResult('❌ Error fetching products', { error: error.message }, true);
+        }
+      }
+
+      async function testCategories() {
+        try {
+          console.log('Testing /api/categories...');
+          const response = await fetch(`${API_URL}/api/categories`);
+          const data = await response.json();
+          console.log('Categories response:', data);
+          showResult(`✅ GET /api/categories - Found ${data.length} categories`, data);
+        } catch (error) {
+          console.error('Categories error:', error);
+          showResult('❌ Error fetching categories', { error: error.message }, true);
+        }
+      }
+
+      async function testCustomers() {
+        try {
+          console.log('Testing /api/customers...');
+          const response = await fetch(`${API_URL}/api/customers`);
+          const data = await response.json();
+          console.log('Customers response:', data);
+          showResult(
+            `✅ GET /api/customers - Found ${data.pagination?.total || data.length} customers`,
+            data
+          );
+        } catch (error) {
+          console.error('Customers error:', error);
+          showResult('❌ Error fetching customers', { error: error.message }, true);
+        }
+      }
+
+      async function testSuppliers() {
+        try {
+          console.log('Testing /api/suppliers...');
+          const response = await fetch(`${API_URL}/api/suppliers`);
+          const data = await response.json();
+          console.log('Suppliers response:', data);
+          showResult(
+            `✅ GET /api/suppliers - Found ${data.pagination?.total || data.length} suppliers`,
+            data
+          );
+        } catch (error) {
+          console.error('Suppliers error:', error);
+          showResult('❌ Error fetching suppliers', { error: error.message }, true);
+        }
+      }
+
+      async function testCreate() {
+        try {
+          const newProduct = {
+            id: 'test-' + Date.now(),
+            sku: 'TEST' + Date.now(),
+            name: 'Test Product ' + new Date().toLocaleTimeString(),
+            type: 'product',
+            costPrice: 100000,
+            salePrice: 150000,
+            stockQty: 10,
+            unit: 'cái',
+            status: 'in_stock',
+            description: 'Test product from API test page',
+          };
+
+          console.log('Testing POST /api/products...', newProduct);
+          const response = await fetch(`${API_URL}/api/products`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(newProduct),
+          });
+
+          const data = await response.json();
+          console.log('Create response:', data);
+          showResult('✅ POST /api/products - Product created successfully', data);
+        } catch (error) {
+          console.error('Create error:', error);
+          showResult('❌ Error creating product', { error: error.message }, true);
+        }
+      }
+
+      // Auto-test on load
+      window.onload = () => {
+        console.log('Page loaded, running auto-test...');
+        setTimeout(testProducts, 500);
+      };
+    </script>
+  </body>
+</html>

@@ -1,0 +1,14 @@
+[
+  {
+    "id": "81d12a00-97ba-468a-bd67-38b6fdb2cd30",
+    "code": "PN000001",
+    "supplierId": "f9a02cf7-ed31-4570-bcab-2877b63e3734",
+    "date": "2026-01-22",
+    "importDateTime": "2026-01-22 17:34:43",
+    "totalAmount": 475000000,
+    "discountAmount": 0,
+    "notes": "Phiếu nhập mẫu - Tạo tự động",
+    "createdAt": "2026-01-22T10:34:43.335Z",
+    "updatedAt": "2026-01-22T10:34:43.335Z"
+  }
+]
